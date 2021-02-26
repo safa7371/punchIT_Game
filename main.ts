@@ -1,38 +1,73 @@
-input.onPinPressed(TouchPin.P1, function () {
+input.onButtonPressed(Button.A, function () {
     if (action == 0 && input.isGesture(Gesture.ScreenDown)) {
-        music.startMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Once)
+        music.ringTone(784)
         game.addScore(1)
         action = -1
-    } else if (action == 1 && input.isGesture(Gesture.LogoDown)) {
-        music.startMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Once)
+        music.stopAllSounds()
+    } else if (action == 1 && input.isGesture(Gesture.LogoUp)) {
+        music.ringTone(784)
         game.addScore(1)
         action = -1
+        music.stopAllSounds()
     } else if (action == 2 && input.isGesture(Gesture.TiltLeft)) {
+        music.ringTone(784)
         game.addScore(1)
         action = -1
-        music.startMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Once)
+        music.stopAllSounds()
     } else {
+        soundExpression.sad.play()
         action = -2
-        music.startMelody(music.builtInMelody(Melodies.Funeral), MelodyOptions.Once)
         bluetooth.uartWriteString("GAME OVER")
         game.gameOver()
+        music.stopAllSounds()
     }
+})
+input.onGesture(Gesture.LogoUp, function () {
+	
+})
+input.onGesture(Gesture.TiltLeft, function () {
+	
+})
+input.onGesture(Gesture.ScreenDown, function () {
+	
 })
 let action = 0
 bluetooth.startUartService()
+basic.pause(5000)
+soundExpression.twinkle.play()
 action = -1
-music.startMelody(music.builtInMelody(Melodies.Nyan), MelodyOptions.Once)
-game.startCountdown(10000)
-bluetooth.uartWriteString("GAME START")
+game.startCountdown(100000000)
+bluetooth.uartWriteString("START GAME")
 music.stopAllSounds()
 basic.forever(function () {
     if (action == -1) {
-        action = randint(0, 3)
+        action = randint(0, 2)
     } else if (action == 0) {
-        bluetooth.uartWriteString("\"PUNCH\"")
+        basic.showLeds(`
+            . # # # .
+            . # . # .
+            . # # # .
+            . # . . .
+            . # . . .
+            `)
+        bluetooth.uartWriteString("PUNCH")
     } else if (action == 1) {
+        basic.showLeds(`
+            . . . . .
+            . # . # .
+            . # . # .
+            . # . # .
+            . # # # .
+            `)
         bluetooth.uartWriteString("UPPER CUT")
     } else if (action == 2) {
-        bluetooth.uartWriteLine("BLOCK")
+        basic.showLeds(`
+            . # # # .
+            . # . # .
+            . # # # .
+            . # . # .
+            . # # # .
+            `)
+        bluetooth.uartWriteString("BLOCK")
     }
 })
