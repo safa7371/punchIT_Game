@@ -1,4 +1,13 @@
-input.onButtonPressed(Button.A, function () {
+input.onGesture(Gesture.LogoUp, function () {
+	
+})
+input.onGesture(Gesture.TiltLeft, function () {
+	
+})
+input.onGesture(Gesture.ScreenDown, function () {
+	
+})
+input.onPinPressed(TouchPin.P1, function () {
     if (action == 0 && input.isGesture(Gesture.ScreenDown)) {
         music.ringTone(784)
         game.addScore(1)
@@ -21,15 +30,6 @@ input.onButtonPressed(Button.A, function () {
         game.gameOver()
         music.stopAllSounds()
     }
-})
-input.onGesture(Gesture.LogoUp, function () {
-	
-})
-input.onGesture(Gesture.TiltLeft, function () {
-	
-})
-input.onGesture(Gesture.ScreenDown, function () {
-	
 })
 let action = 0
 bluetooth.startUartService()
